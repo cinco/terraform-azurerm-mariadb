@@ -35,7 +35,7 @@ resource "azurerm_resource_group" "mariadb_rg" {
 }
 
 resource "azurerm_mariadb_server" "mariadb_server" {
-  name                         = lower("${local.name}-MARIADB-SRVR")
+  name                         = var.name_server
   location                     = azurerm_resource_group.mariadb_rg.location
   resource_group_name          = azurerm_resource_group.mariadb_rg.name
   sku_name                     = var.sku_name

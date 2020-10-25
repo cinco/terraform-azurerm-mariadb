@@ -4,6 +4,12 @@ variable "name" {
   type        = string
 }
 
+variable "name_server" {
+  description = "The name of the MariaDB Server."
+  default     = ""
+  type        = string
+}
+
 variable "location" {
   description = "Specifies the supported Azure location where the resource exists."
   default     = "eastus"
