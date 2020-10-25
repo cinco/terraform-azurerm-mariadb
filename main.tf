@@ -28,16 +28,16 @@ module "tags" {
 ########################################
 # MariaDB things
 ########################################
-resource "azurerm_resource_group" "mariadb_rg" {
-  name     = var.name
-  location = var.location
-  tags     = local.tags
-}
+# resource "azurerm_resource_group" "mariadb_rg" {
+#   name     = var.name
+#   location = var.location
+#   tags     = local.tags
+# }
 
 resource "azurerm_mariadb_server" "mariadb_server" {
   name                         = var.name_server
-  location                     = azurerm_resource_group.mariadb_rg.location
-  resource_group_name          = azurerm_resource_group.mariadb_rg.name
+  location                     = var.location
+  resource_group_name          = var.name
   sku_name                     = var.sku_name
   administrator_login          = local.administrator_login
   administrator_login_password = local.administrator_password
@@ -58,7 +58,7 @@ resource "azurerm_mariadb_database" "database" {
   name                = each.value.name
   charset             = lookup(each.value, "charset", "utf8")
   collation           = lookup(each.value, "collation", "utf8_unicode_ci")
-  resource_group_name = azurerm_resource_group.mariadb_rg.name
+  resource_group_name = var.name
   server_name         = azurerm_mariadb_server.mariadb_server.name
 }
 
@@ -68,7 +68,7 @@ resource "azurerm_mariadb_firewall_rule" "firewall_rule" {
   name                = each.key
   start_ip_address    = each.value.start_ip
   end_ip_address      = each.value.end_ip
-  resource_group_name = azurerm_resource_group.mariadb_rg.name
+  resource_group_name = var.name
   server_name         = azurerm_mariadb_server.mariadb_server.name
 }
 
@@ -77,7 +77,7 @@ resource "azurerm_mariadb_virtual_network_rule" "vnet_rule" {
 
   name                = each.key
   subnet_id           = each.value
-  resource_group_name = azurerm_resource_group.mariadb_rg.name
+  resource_group_name = var.name
   server_name         = azurerm_mariadb_server.mariadb_server.name
 }
 
@@ -86,7 +86,7 @@ resource "azurerm_mariadb_configuration" "config" {
 
   name                = each.key
   value               = each.value
-  resource_group_name = azurerm_resource_group.mariadb_rg.name
+  resource_group_name = var.name
   server_name         = azurerm_mariadb_server.mariadb_server.name
 }
 
@@ -96,7 +96,7 @@ resource "azurerm_mariadb_configuration" "config" {
 resource "azurerm_monitor_metric_alert" "mariadb" {
   for_each            = var.monitor_metric_alert_criteria
   name                = "${local.name}-${upper(each.key)}"
-  resource_group_name = azurerm_resource_group.mariadb_rg.name
+  resource_group_name = var.name
   scopes              = [azurerm_mariadb_server.mariadb_server.id]
   tags                = local.tags
 
