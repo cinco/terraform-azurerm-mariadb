@@ -44,6 +44,7 @@ resource "azurerm_mariadb_server" "mariadb_server" {
   version                      = var.server_version
   ssl_enforcement              = var.ssl_enforcement
   tags                         = local.tags
+  public_network_access_enabled = var.public_network_access
 
   storage_profile {
     storage_mb            = var.storage_mb
