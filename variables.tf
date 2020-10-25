@@ -28,6 +28,12 @@ variable "sku_name" {
   type        = string
 }
 
+variable "public_network_access" {
+  description = "Public access to network"
+  default     = ""
+  type        = string
+}
+
 variable "storage_mb" {
   description = <<EOD
     Max storage allowed for a server. Possible values are:
