@@ -29,7 +29,7 @@ module "tags" {
 # MariaDB things
 ########################################
 resource "azurerm_resource_group" "mariadb_rg" {
-  name     = "${local.name}-RG"
+  name     = "${local.name}"
   location = var.location
   tags     = local.tags
 }
