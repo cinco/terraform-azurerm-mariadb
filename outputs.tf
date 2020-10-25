@@ -1,6 +1,6 @@
 output "resource_group_name" {
   description = "Name of MariaDB server resource group"
-  value       = azurerm_resource_group.mariadb_rg.name
+  value       = var.name
 }
 
 output "server_name" {
