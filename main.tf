@@ -42,14 +42,14 @@ resource "azurerm_mariadb_server" "mariadb_server" {
   administrator_login          = local.administrator_login
   administrator_login_password = local.administrator_password
   version                      = var.server_version
-  ssl_enforcement_enable       = var.ssl_enforcement
+  ssl_enforcement_enabled      = var.ssl_enforcement
   tags                         = local.tags
   public_network_access_enabled = var.public_network_access
 
   storage_mb            = var.storage_mb
   backup_retention_days = var.backup_retention_days
-  geo_redundant_backup  = var.geo_redundant_backup
-  auto_grow             = var.auto_grow
+  geo_redundant_backup_enabled  = var.geo_redundant_backup
+  auto_grow_enabled             = var.auto_grow
 }
 
 resource "azurerm_mariadb_database" "database" {
